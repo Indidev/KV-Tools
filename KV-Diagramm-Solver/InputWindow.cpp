@@ -17,7 +17,7 @@
 
 #include "InputWindow.h"
 
-InputWindow::InputWindow(int t, int l, int w, int h, char* title):MyWindow(t, l, w, h, title) {
+InputWindow::InputWindow(int x, int y, int w, int h, char* title):MyWindow(x, y, w, h, title) {
 
 	this->color(FL_LIGHT3);
 
@@ -66,6 +66,7 @@ void InputWindow::handleCallback(Fl_Widget* widgetptr) {
 			}
 		}
 		
+		//activate or deactivate next button according to the input
 		if (Functions::isNumber(input->value()))
 			okButton->activate();
 		else
