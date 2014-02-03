@@ -192,7 +192,7 @@ void InputDataWin::initKVWin() {
 	
 	for (int i = 0; i < values1->size(); i++) {
 		if (values1->at(i) < entrys.size()) {
-			entrys.at(values1->at(i))->setValue(1 - defEntry);
+			entrys.at(values1->at(i))->setValue(1 - (defEntry % 2));
 			entrys.at(values1->at(i))->lock(true);
 		}
 	}
@@ -200,11 +200,12 @@ void InputDataWin::initKVWin() {
 	if (!fulldef) {
 		vector<int> *values2 = Functions::splitStringToInt(input2->value(), ',');
 		
+		cout << selectedOption << endl;
 		defEntry = (selectedOption == 2)?0:2;
 		
 		for (int i = 0; i < values2->size(); i++) {
 			if(!entrys.at(values2->at(i))->lock() && (values2->at(i) < entrys.size()))
-				entrys.at(values2->at(i))->setValue(1 - defEntry);
+				entrys.at(values2->at(i))->setValue(defEntry);
 		}
 	}
 		
