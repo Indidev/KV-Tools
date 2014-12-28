@@ -72,9 +72,9 @@ void KVWindow::handleCallback(Fl_Widget* widgetptr) {
 		reset();
 	
 	} else if(widgetptr == blockTypeButton) {
-	
 		changeBlockType();
-	
+	} else {
+		changeBlock(widgetptr);
 	}
 }
 
@@ -95,6 +95,7 @@ void KVWindow::drawTable() {
 		char* label = Functions::StringToCString(this->entrys[i]->getLabel());
 		
 		KVEntryBox *b = new KVEntryBox(OFFSET + xCord[i] * BSIZE, OFFSET + yCord[i] * BSIZE, BSIZE, BSIZE, label, i, this);
+		blocks.push_back(b);
 		
 	}
 	this->end();	
@@ -265,28 +266,48 @@ bool KVWindow::solveStep() {
 	return changedSomething;
 }
 
-	void KVWindow::reset() {
-		
-		for (int i = 0; i < primBlocks.size(); i++)
-			delete(primBlocks[i]);
-			
-		primBlocks.clear();
-		
-		this->redraw();
-	}
+void KVWindow::reset() {
 	
-	void KVWindow::solve() {
-		while(solveStep());
-	}
+	for (int i = 0; i < primBlocks.size(); i++)
+		delete(primBlocks[i]);
+		
+	primBlocks.clear();
 	
-	void KVWindow::changeBlockType() {
-		
-		blockType = 1 - blockType;
-		
-		string bt = "Block Type: ";
-		bt += Functions::intToCString(blockType);
-		
-		blockTypeButton->label(Functions::StringToCString(bt));
-		
-		reset();
+	this->redraw();
+}
+
+void KVWindow::solve() {
+	while(solveStep());
+}
+
+void KVWindow::changeBlockType() {
+	
+	blockType = 1 - blockType;
+	
+	string bt = "Block Type: ";
+	bt += Functions::intToCString(blockType);
+	
+	blockTypeButton->label(Functions::StringToCString(bt));
+	
+	reset();
+}
+
+void KVWindow::changeBlock(Fl_Widget* widgetptr) {
+	bool found = false;
+	
+	for (int i = 0; i < blocks.size() && !found; i++) {
+		if (blocks[i] == widgetptr) {
+			found = true;
+			KVEntry * entry = entrys[blocks[i]->getNum()];
+			entry->lock(false);
+			unsigned char val = entry->getValue();
+			val += 1;
+			val %= 3;
+			entry->setValue(val);
+			entry->lock(true);
+			blocks[i]->changeEntry(Functions::StringToCString(entry->getLabel()));
+			this->reset();
+			this->redraw();
+		}
 	}
+}
