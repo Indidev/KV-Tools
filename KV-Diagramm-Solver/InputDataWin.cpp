@@ -175,15 +175,18 @@ void InputDataWin::drawSpecialComponents() {
 void InputDataWin::initKVWin() {
 	vector<KVEntry*> entrys;
 	
-	int defEntry = 0;
+	int defEntry = 1;
+	int invEntry = 0;
 		
-	if ((fulldef && !isMint) || (!fulldef && (selectedOption == 1)))
-		defEntry = 1;	
+	if ((fulldef && !isMint) || (!fulldef && (selectedOption == 1))) {
+		defEntry = 0;	
+		invEntry = 1;
+	}
 	else if (!fulldef && (selectedOption == 2))
-		defEntry = 2;
+		invEntry = 2;
   
 	for (int i = 0; i < pow(2, quantity); i++) {
-		KVEntry *e = new KVEntry(i, defEntry);
+		KVEntry *e = new KVEntry(i, invEntry);
 		entrys.push_back(e);
 	}
 		
@@ -192,7 +195,7 @@ void InputDataWin::initKVWin() {
 	
 	for (int i = 0; i < values1->size(); i++) {
 		if (values1->at(i) < entrys.size()) {
-			entrys.at(values1->at(i))->setValue(1 - (defEntry % 2));
+			entrys.at(values1->at(i))->setValue(defEntry);
 			entrys.at(values1->at(i))->lock(true);
 		}
 	}
@@ -200,7 +203,6 @@ void InputDataWin::initKVWin() {
 	if (!fulldef) {
 		vector<int> *values2 = Functions::splitStringToInt(input2->value(), ',');
 		
-		cout << selectedOption << endl;
 		defEntry = (selectedOption == 2)?0:2;
 		
 		for (int i = 0; i < values2->size(); i++) {

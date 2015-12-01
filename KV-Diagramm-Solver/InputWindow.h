@@ -1,9 +1,6 @@
 #ifndef INPUTWINDOW_H
 #define INPUTWINDOW_H
 
-/**
-	Provides a window to enter the number of variables of the kv-diagramm
-*/
 class InputWindow: public MyWindow {
 
 	private:
@@ -12,16 +9,8 @@ class InputWindow: public MyWindow {
 		Fl_Int_Input *input;
 	
 	public: 
-		InputWindow(int x, int y, int w, int h, char* title);
-		
-		/**
-			Handles different callbacks
-		*/
+		InputWindow(int t, int l, int w, int h, char* title);
 		void handleCallback(Fl_Widget* widgetptr);
-		
-		/**
-			handles callbackes thrown by pushing the enter button
-		*/		
 		void handleEnterCallback(Fl_Widget* widgetptr);
 
 };

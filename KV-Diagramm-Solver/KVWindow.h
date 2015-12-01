@@ -12,6 +12,7 @@ class KVWindow : public MyWindow {
 		vector<KVEntry*> entrys;
 		//vector<KVEntryBox> buttons;
 		vector<PrimBlock*> primBlocks;
+		vector<KVEntryBox*> blocks;
 		vector<int> xCord;
 		vector<int> yCord;
 		
@@ -26,6 +27,7 @@ class KVWindow : public MyWindow {
 		void solve();
 		void reset();
 		void changeBlockType();
+		void changeBlock(Fl_Widget* widgetptr);
 
 	public:
 		KVWindow(int t, int l, int w, int h, char* title, vector<KVEntry*> *entrys);
