@@ -51,6 +51,7 @@ public:
 			i *= 10;
 		}
 		
+		free(s);
 		return value;
 	}
 	
